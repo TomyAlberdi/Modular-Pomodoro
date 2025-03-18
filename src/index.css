@@ -40,7 +40,7 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
   /* New color variables */
-  --custom-main: oklch(0.232 0.115 268.174);
+  --custom-main: oklch(0.485 0.157 27.454);
   --custom-sec: oklch(0.393 0.1925 262.415);
   --custom-acc: oklch(0.749 0.0639 242.03);
 }
@@ -78,7 +78,7 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
   /* New color variables */
-  --custom-main: oklch(0.190 0.1925 23.579);
+  --custom-main: oklch(0.482 0.103 233.526);
   --custom-sec: oklch(0.299 0.305 26.244);
   --custom-acc: oklch(0.398 0.405 27.319);
 }

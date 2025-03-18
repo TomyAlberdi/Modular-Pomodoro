@@ -13,13 +13,14 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
-    "@radix-ui/react-aspect-ratio": "^1.1.2",
     "@tailwindcss/vite": "^4.0.14",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.482.0",
     "react": "^19.0.0",
+    "react-countdown-circle-timer": "^3.2.1",
     "react-dom": "^19.0.0",
+    "react-resizable-panels": "^2.1.7",
     "tailwind-merge": "^3.0.2",
     "tailwindcss": "^4.0.14",
     "tailwindcss-animate": "^1.0.7"
