@@ -1,4 +1,18 @@
-import { CommandDialog } from "@/components/ui/command";
+import {
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
+import { useTimerContext } from "@/context/UseTimerContext";
+import {
+  Pause,
+  PauseCircle,
+  PlayCircle,
+  RotateCcw,
+  SquarePen,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 
 const CommandMenu = () => {
@@ -17,9 +31,50 @@ const CommandMenu = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const {
+    timerDuration,
+    isRunning,
+    isStarted,
+    remainingTime,
+    startTimer,
+    pauseTimer,
+    resumeTimer,
+    cancelTimer,
+    updateTimerDuration,
+  } = useTimerContext();
+
   return (
     <CommandDialog open={Open} onOpenChange={setOpen}>
-      ey
+      <CommandInput placeholder="Type a command or search..." />
+      <CommandEmpty>No results found.</CommandEmpty>
+      <CommandGroup heading="Timer">
+        <CommandItem>
+          {isRunning ? (
+            <>
+              <PauseCircle />
+              <span>Pause Timer</span>
+            </>
+          ) : isStarted ? (
+            <>
+              <PlayCircle />
+              <span>Resume Timer</span>
+            </>
+          ) : (
+            <>
+              <PlayCircle />
+              <span>Start Timer</span>
+            </>
+          )}
+        </CommandItem>
+        <CommandItem>
+          <RotateCcw />
+          <span>Reset Timer</span>
+        </CommandItem>
+        <CommandItem>
+          <SquarePen />
+          <span>Update Timer</span>
+        </CommandItem>
+      </CommandGroup>
     </CommandDialog>
   );
 };
