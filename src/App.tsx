@@ -19,7 +19,7 @@ function App() {
     <ResizablePanelGroup
       direction="horizontal"
       className={
-        "App min-h-screen min-w-screen flex justify-center items-center overflow-hidden " +
+        "App min-h-screen min-w-screen flex justify-center items-center overflow-hidden transition-colors duration-500 ease-linear " +
         (isRunning ? "bg-custom-sec" : "bg-custom-main")
       }
     >

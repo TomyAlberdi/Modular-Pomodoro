@@ -25,14 +25,26 @@ const CommandMenu = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const { isRunning, isStarted } = useTimerContext();
+  const { isRunning, isStarted, startTimer, pauseTimer, resumeTimer } =
+    useTimerContext();
+
+  const handleStartCommand = () => {
+    if (!isStarted) {
+      startTimer();
+    } else if (isRunning) {
+      pauseTimer();
+    } else {
+      resumeTimer();
+    }
+    setOpen(false);
+  };
 
   return (
     <CommandDialog open={Open} onOpenChange={setOpen}>
       <CommandInput placeholder="Type a command or search..." />
       <CommandEmpty>No results found.</CommandEmpty>
       <CommandGroup heading="Timer">
-        <CommandItem>
+        <CommandItem onSelect={handleStartCommand}>
           {isRunning ? (
             <>
               <PauseCircle />
