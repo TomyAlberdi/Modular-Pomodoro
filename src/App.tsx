@@ -10,12 +10,18 @@ import Timer from "@/modules/Timer";
 import Variables from "@/modules/Variables";
 import CommandMenu from "@/modules/CommandMenu.tsx";
 import FloatingAdvice from "@/components/FloatingAdvice";
+import { useTimerContext } from "@/context/UseTimerContext";
 
 function App() {
+  const { isRunning } = useTimerContext();
+
   return (
     <ResizablePanelGroup
       direction="horizontal"
-      className="App min-h-screen min-w-screen bg-custom-main flex justify-center items-center overflow-hidden"
+      className={
+        "App min-h-screen min-w-screen flex justify-center items-center overflow-hidden " +
+        (isRunning ? "bg-custom-sec" : "bg-custom-main")
+      }
     >
       <Pauses />
       <ResizableHandle withHandle />

@@ -6,13 +6,7 @@ import {
   CommandItem,
 } from "@/components/ui/command";
 import { useTimerContext } from "@/context/UseTimerContext";
-import {
-  Pause,
-  PauseCircle,
-  PlayCircle,
-  RotateCcw,
-  SquarePen,
-} from "lucide-react";
+import { PauseCircle, PlayCircle, RotateCcw, SquarePen } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const CommandMenu = () => {
@@ -31,17 +25,7 @@ const CommandMenu = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const {
-    timerDuration,
-    isRunning,
-    isStarted,
-    remainingTime,
-    startTimer,
-    pauseTimer,
-    resumeTimer,
-    cancelTimer,
-    updateTimerDuration,
-  } = useTimerContext();
+  const { isRunning, isStarted } = useTimerContext();
 
   return (
     <CommandDialog open={Open} onOpenChange={setOpen}>
