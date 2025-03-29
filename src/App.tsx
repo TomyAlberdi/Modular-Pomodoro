@@ -6,7 +6,7 @@ import {
 import Pauses from "@/modules/Pauses";
 import Stats from "@/modules/Stats";
 import Streak from "@/modules/Streak";
-import Timer from "@/modules/timer";
+import Timer from "@/modules/Timer";
 import Variables from "@/modules/Variables";
 
 function App() {
@@ -19,9 +19,9 @@ function App() {
       <ResizableHandle withHandle />
       <ResizablePanel
         defaultSize={34}
-        className="border min-h-screen flex justify-center items-center"
+        className="border-x flex justify-center items-center"
       >
-        <ResizablePanelGroup direction="vertical" className="">
+        <ResizablePanelGroup direction="vertical" className="min-h-screen">
           <Variables />
           <ResizableHandle withHandle />
           <Timer />

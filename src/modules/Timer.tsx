@@ -4,7 +4,6 @@ import { ResizablePanel } from "@/components/ui/resizable";
 const Timer = () => {
   return (
     <ResizablePanel
-      defaultSize={50}
       className="flex justify-center items-center"
     >
       timer
