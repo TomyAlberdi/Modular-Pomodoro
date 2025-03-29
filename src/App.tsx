@@ -8,6 +8,7 @@ import Stats from "@/modules/Stats";
 import Streak from "@/modules/Streak";
 import Timer from "@/modules/Timer";
 import Variables from "@/modules/Variables";
+import CommandMenu from "@/modules/CommandMenu.tsx";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
       </ResizablePanel>
       <ResizableHandle withHandle />
       <Stats />
+      <CommandMenu />
     </ResizablePanelGroup>
   );
 }
