@@ -5,6 +5,7 @@ const Timer = () => {
   return (
     <ResizablePanel
       className="flex justify-center items-center"
+      minSize={25}
     >
       timer
     </ResizablePanel>

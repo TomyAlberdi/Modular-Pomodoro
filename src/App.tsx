@@ -19,6 +19,7 @@ function App() {
       <ResizableHandle withHandle />
       <ResizablePanel
         defaultSize={34}
+        minSize={25}
         className="border-x flex justify-center items-center"
       >
         <ResizablePanelGroup direction="vertical" className="min-h-screen">
