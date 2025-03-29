@@ -7,10 +7,14 @@ import {
 } from "@/components/ui/command";
 import { useTimerContext } from "@/context/UseTimerContext";
 import { PauseCircle, PlayCircle, RotateCcw, SquarePen } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-const CommandMenu = () => {
-  const [Open, setOpen] = useState(false);
+interface CommandMenuProps {
+  Open: boolean;
+  setOpen: (Open: boolean) => void;
+}
+
+const CommandMenu = ({ Open, setOpen }: CommandMenuProps) => {
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {

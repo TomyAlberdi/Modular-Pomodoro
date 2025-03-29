@@ -11,9 +11,12 @@ import Variables from "@/modules/Variables";
 import CommandMenu from "@/modules/CommandMenu.tsx";
 import FloatingAdvice from "@/components/FloatingAdvice";
 import { useTimerContext } from "@/context/UseTimerContext";
+import { useState } from "react";
 
 function App() {
   const { isRunning } = useTimerContext();
+
+  const [CommandMenuOpen, setCommandMenuOpen] = useState(false);
 
   return (
     <ResizablePanelGroup
@@ -40,8 +43,8 @@ function App() {
       </ResizablePanel>
       <ResizableHandle withHandle />
       <Stats />
-      <CommandMenu />
-      <FloatingAdvice />
+      <CommandMenu Open={CommandMenuOpen} setOpen={setCommandMenuOpen} />
+      <FloatingAdvice Open={CommandMenuOpen} setOpen={setCommandMenuOpen} />
     </ResizablePanelGroup>
   );
 }
