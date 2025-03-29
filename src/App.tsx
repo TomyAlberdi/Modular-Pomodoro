@@ -9,6 +9,7 @@ import Streak from "@/modules/Streak";
 import Timer from "@/modules/Timer";
 import Variables from "@/modules/Variables";
 import CommandMenu from "@/modules/CommandMenu.tsx";
+import FloatingAdvice from "@/components/FloatingAdvice";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
       <ResizableHandle withHandle />
       <Stats />
       <CommandMenu />
+      <FloatingAdvice />
     </ResizablePanelGroup>
   );
 }
