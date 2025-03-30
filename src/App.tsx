@@ -44,6 +44,7 @@ function App() {
     <ResizablePanelGroup
       direction="horizontal"
       className={
+        // TODO: Implement logic for new background colors for: Idle, Pomodoro, Short Break, Long Break
         "App min-h-screen min-w-screen flex justify-center items-center overflow-hidden transition-colors duration-500 ease-linear " +
         (isRunning ? "bg-custom-sec" : "bg-custom-main")
       }

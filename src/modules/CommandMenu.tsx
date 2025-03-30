@@ -4,6 +4,7 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandShortcut,
 } from "@/components/ui/command";
 import { useTimerContext } from "@/context/UseTimerContext";
 import { PauseCircle, PlayCircle, RotateCcw, SquarePen } from "lucide-react";
@@ -43,6 +44,8 @@ const CommandMenu = ({ Open, setOpen }: CommandMenuProps) => {
     setOpen(false);
   };
 
+  // TODO: Implement arrow navigation and enter execution for commands
+
   return (
     <CommandDialog open={Open} onOpenChange={setOpen}>
       <CommandInput placeholder="Type a command or search..." />
@@ -65,14 +68,16 @@ const CommandMenu = ({ Open, setOpen }: CommandMenuProps) => {
               <span>Start Timer</span>
             </>
           )}
+          <CommandShortcut>Space</CommandShortcut>
         </CommandItem>
+        {/* TODO: Implement reset timer command functionality */}
         <CommandItem>
           <RotateCcw />
           <span>Reset Timer</span>
         </CommandItem>
-        <CommandItem>
+        <CommandItem disabled>
           <SquarePen />
-          <span>Update Timer</span>
+          <span>Update Timer Values</span>
         </CommandItem>
       </CommandGroup>
     </CommandDialog>
