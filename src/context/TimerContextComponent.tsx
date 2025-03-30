@@ -72,6 +72,7 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
 
   // Timer type and count states
   const [currentType, setCurrentType] = useState<TimerType>("pomodoro");
+  //TODO: Save pomodoro count in localStorage
   const [pomodoroCount, setPomodoroCount] = useState(0);
 
   // Timer duration states

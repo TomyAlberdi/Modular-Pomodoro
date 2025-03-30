@@ -5,7 +5,7 @@ import { useTimerContext } from "@/context/UseTimerContext";
 const Streak = () => {
   const { pomodoroCount } = useTimerContext();
   const { streakPanelSize, streakPanel } = usePanelContext();
-
+  //TODO: Design & implement streak panel
   return (
     <ResizablePanel
       ref={streakPanel}
