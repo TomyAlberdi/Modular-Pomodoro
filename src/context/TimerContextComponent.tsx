@@ -12,6 +12,7 @@ interface TimerContextComponentProps {
 const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
   children,
 }) => {
+  // TODO: Implement localstorage to save timer settings
   // Timer type and count states
   const [currentType, setCurrentType] = useState<TimerType>("pomodoro");
   const [pomodoroCount, setPomodoroCount] = useState(0);

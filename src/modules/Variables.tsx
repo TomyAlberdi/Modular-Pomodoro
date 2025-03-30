@@ -1,6 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ResizablePanel } from "@/components/ui/resizable";
+import { usePanelContext } from "@/context/UsePanelContext";
 import { useTimerContext } from "@/context/UseTimerContext";
 
 const Variables = () => {
@@ -21,8 +22,14 @@ const Variables = () => {
     return minutes * 60;
   };
 
+  const { variablesPanelSize, variablesPanel } = usePanelContext();
+
   return (
-    <ResizablePanel className="flex flex-col justify-center items-center gap-2">
+    <ResizablePanel
+      className="flex flex-col justify-center items-center gap-2"
+      defaultSize={variablesPanelSize}
+      ref={variablesPanel}
+    >
       <span className="text-lg font-semibold">Time (Minutes)</span>
       <section className="flex flex-col justify-center items-center gap-2 w-[90%]">
         <div className="grid w-full max-w-sm items-center gap-1.5">

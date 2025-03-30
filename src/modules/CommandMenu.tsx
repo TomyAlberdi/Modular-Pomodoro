@@ -7,13 +7,16 @@ import {
   CommandList,
   CommandShortcut,
 } from "@/components/ui/command";
+import { usePanelContext } from "@/context/UsePanelContext";
 import { useTimerContext } from "@/context/UseTimerContext";
 import {
+  Eye,
+  EyeOff,
+  Grid2x2Check,
   PauseCircle,
   PlayCircle,
   RotateCcw,
   SkipForward,
-  SquarePen,
 } from "lucide-react";
 import { useEffect } from "react";
 
@@ -58,10 +61,22 @@ const CommandMenu = ({ Open, setOpen }: CommandMenuProps) => {
     setOpen(false);
   };
 
+  const {
+    resetPanelSizes,
+    pausesPanelSize,
+    togglePausePanel,
+    statsPanelSize,
+    toggleStatsPanel,
+    variablesPanelSize,
+    toggleVariablesPanel,
+    streakPanelSize,
+    toggleStreakPanel,
+  } = usePanelContext();
+
   return (
     <CommandDialog open={Open} onOpenChange={setOpen}>
       <CommandInput placeholder="Type a command or search..." />
-      <CommandList>
+      <CommandList className="custom-scrollbar">
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Timer">
           <CommandItem onSelect={handleStartCommand}>
@@ -103,9 +118,63 @@ const CommandMenu = ({ Open, setOpen }: CommandMenuProps) => {
             <span>Reset Timer</span>
             <CommandShortcut>Ctrl + Y</CommandShortcut>
           </CommandItem>
-          <CommandItem disabled>
-            <SquarePen />
-            <span>Update Timer Values</span>
+        </CommandGroup>
+        <CommandGroup heading="Modules">
+          <CommandItem onSelect={resetPanelSizes}>
+            <Grid2x2Check />
+            Reset Layout
+          </CommandItem>
+          <CommandItem onSelect={togglePausePanel}>
+            {pausesPanelSize > 0 ? (
+              <>
+                <EyeOff />
+                <span>Hide Pauses Module</span>
+              </>
+            ) : (
+              <>
+                <Eye />
+                <span>Show Pauses Module</span>
+              </>
+            )}
+          </CommandItem>
+          <CommandItem onSelect={toggleStatsPanel}>
+            {statsPanelSize > 0 ? (
+              <>
+                <EyeOff />
+                <span>Hide Stats Module</span>
+              </>
+            ) : (
+              <>
+                <Eye />
+                <span>Show Stats Module</span>
+              </>
+            )}
+          </CommandItem>
+          <CommandItem onSelect={toggleVariablesPanel}>
+            {variablesPanelSize > 0 ? (
+              <>
+                <EyeOff />
+                <span>Hide Variables Module</span>
+              </>
+            ) : (
+              <>
+                <Eye />
+                <span>Show Variables Module</span>
+              </>
+            )}
+          </CommandItem>
+          <CommandItem onSelect={toggleStreakPanel}>
+            {streakPanelSize > 0 ? (
+              <>
+                <EyeOff />
+                <span>Hide Streak Module</span>
+              </>
+            ) : (
+              <>
+                <Eye />
+                <span>Show Streak Module</span>
+              </>
+            )}
           </CommandItem>
         </CommandGroup>
       </CommandList>

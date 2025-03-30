@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ResizablePanel } from "@/components/ui/resizable";
+import { usePanelContext } from "@/context/UsePanelContext";
 import { useTimerContext } from "@/context/UseTimerContext";
 import { PauseCircle, PlayCircle, SkipForward, Square } from "lucide-react";
 
@@ -18,10 +19,13 @@ const Timer = () => {
     formatRemainingTime,
   } = useTimerContext();
 
+  const { timerPanelSize } = usePanelContext();
+
   return (
     <ResizablePanel
       className="flex flex-col justify-center items-center gap-4"
       minSize={30}
+      defaultSize={timerPanelSize}
     >
       <span className="text-xl">
         {currentType.charAt(0).toUpperCase() + currentType.slice(1)}
