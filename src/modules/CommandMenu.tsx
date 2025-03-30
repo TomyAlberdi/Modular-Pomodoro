@@ -8,7 +8,13 @@ import {
   CommandShortcut,
 } from "@/components/ui/command";
 import { useTimerContext } from "@/context/UseTimerContext";
-import { PauseCircle, PlayCircle, RotateCcw, SquarePen } from "lucide-react";
+import {
+  PauseCircle,
+  PlayCircle,
+  RotateCcw,
+  SkipForward,
+  SquarePen,
+} from "lucide-react";
 import { useEffect } from "react";
 
 interface CommandMenuProps {
@@ -31,8 +37,15 @@ const CommandMenu = ({ Open, setOpen }: CommandMenuProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const { isRunning, isStarted, startTimer, pauseTimer, resumeTimer } =
-    useTimerContext();
+  const {
+    isRunning,
+    isStarted,
+    startTimer,
+    pauseTimer,
+    resumeTimer,
+    resetTimer,
+    skipTimer,
+  } = useTimerContext();
 
   const handleStartCommand = () => {
     if (!isStarted) {
@@ -70,10 +83,25 @@ const CommandMenu = ({ Open, setOpen }: CommandMenuProps) => {
             )}
             <CommandShortcut>Space</CommandShortcut>
           </CommandItem>
-          {/* TODO: Implement reset timer command functionality */}
-          <CommandItem>
+          <CommandItem
+            onSelect={() => {
+              skipTimer();
+              setOpen(false);
+            }}
+          >
+            <SkipForward />
+            <span>Skip Timer</span>
+            <CommandShortcut>Ctrl + X</CommandShortcut>
+          </CommandItem>
+          <CommandItem
+            onSelect={() => {
+              resetTimer();
+              setOpen(false);
+            }}
+          >
             <RotateCcw />
             <span>Reset Timer</span>
+            <CommandShortcut>Ctrl + Y</CommandShortcut>
           </CommandItem>
           <CommandItem disabled>
             <SquarePen />

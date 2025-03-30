@@ -21,10 +21,12 @@ function App() {
     pauseTimer,
     resumeTimer,
     currentType,
+    skipTimer,
+    resetTimer,
   } = useTimerContext();
 
   useEffect(() => {
-    const down = (e: KeyboardEvent) => {
+    const pause = (e: KeyboardEvent) => {
       if (e.key === " " || e.key === "Spacebar") {
         e.preventDefault();
         if (!isStarted) {
@@ -36,11 +38,35 @@ function App() {
         }
       }
     };
-    document.addEventListener("keydown", down);
-    return () => {
-      document.removeEventListener("keydown", down);
+    const skip = (e: KeyboardEvent) => {
+      if (e.key === "x" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        skipTimer();
+      }
     };
-  }, [isStarted, isRunning, startTimer, pauseTimer, resumeTimer]);
+    const reset = (e: KeyboardEvent) => {
+      if (e.key === "y" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        resetTimer();
+      }
+    };
+    document.addEventListener("keydown", pause);
+    document.addEventListener("keydown", skip);
+    document.addEventListener("keydown", reset);
+    return () => {
+      document.removeEventListener("keydown", pause);
+      document.removeEventListener("keydown", skip);
+      document.removeEventListener("keydown", reset);
+    };
+  }, [
+    isStarted,
+    isRunning,
+    startTimer,
+    pauseTimer,
+    resumeTimer,
+    skipTimer,
+    resetTimer,
+  ]);
 
   const [CommandMenuOpen, setCommandMenuOpen] = useState(false);
 
