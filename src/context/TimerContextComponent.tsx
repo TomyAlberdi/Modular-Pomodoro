@@ -39,6 +39,30 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
     audioRef.current = new Audio("/Modular-Pomodoro/new-timer.mp3");
   }, []);
 
+  // Notification permission state
+  const [notificationPermission, setNotificationPermission] =
+    useState<NotificationPermission>("default");
+
+  // Request notification permission
+  useEffect(() => {
+    if ("Notification" in window) {
+      Notification.requestPermission().then((permission) => {
+        setNotificationPermission(permission);
+      });
+    }
+  }, []);
+
+  const sendNotification = useCallback(
+    (title: string) => {
+      if (notificationPermission === "granted") {
+        new Notification(title, {
+          icon: "/Modular-Pomodoro/timer.svg",
+        });
+      }
+    },
+    [notificationPermission]
+  );
+
   // Retrieve stored settings or use default values
   const storedSettings = getStoredSettings();
 
@@ -103,8 +127,10 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
     if (currentType === "pomodoro") {
       setPomodoroCount((prev) => prev + 1);
       nextType = (pomodoroCount + 1) % 4 === 0 ? "longBreak" : "shortBreak";
+      sendNotification("Break Time!");
     } else {
       nextType = "pomodoro";
+      sendNotification("Focus Time!");
     }
 
     const nextDuration =
@@ -124,6 +150,7 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
     shortBreakDuration,
     longBreakDuration,
     startCountdown,
+    sendNotification,
   ]);
 
   // Starts the timer
