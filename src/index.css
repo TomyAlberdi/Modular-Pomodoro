@@ -141,4 +141,5 @@
 * {
   box-sizing: border-box;
   font-family: "Roboto Mono", monospace;
+  user-select: none;
 }
