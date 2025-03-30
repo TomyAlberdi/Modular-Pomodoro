@@ -40,9 +40,10 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
   /* New color variables */
-  --custom-main: oklch(0.232 0.115 268.174);
-  --custom-sec: oklch(0.393 0.1925 262.415);
-  --custom-acc: oklch(0.749 0.0639 242.03);
+  --timer-idle: oklch(0.3 0.03 240);
+  --timer-pomodoro: oklch(0.35 0.12 25);
+  --timer-short-break: oklch(0.4 0.08 180);
+  --timer-long-break: oklch(0.32 0.06 200);
 }
 
 .dark {
@@ -78,9 +79,10 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
   /* New color variables */
-  --custom-main: oklch(0.190 0.1925 23.579);
-  --custom-sec: oklch(0.299 0.305 26.244);
-  --custom-acc: oklch(0.398 0.405 27.319);
+  --timer-idle: oklch(0.3 0.03 240);
+  --timer-pomodoro: oklch(0.35 0.12 25);
+  --timer-short-break: oklch(0.4 0.08 180);
+  --timer-long-break: oklch(0.32 0.06 200);
 }
 
 @theme inline {
@@ -120,9 +122,10 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   /* New color mappings */
-  --color-custom-main: var(--custom-main);
-  --color-custom-sec: var(--custom-sec);
-  --color-custom-acc: var(--custom-acc);
+  --color-timer-idle: var(--timer-idle);
+  --color-timer-pomodoro: var(--timer-pomodoro);
+  --color-timer-short-break: var(--timer-short-break);
+  --color-timer-long-break: var(--timer-long-break);
 }
 
 @layer base {
@@ -137,7 +140,29 @@
 /* Custom rules */
 * {
   box-sizing: border-box;
-  padding: 0;
-  margin: 0;
   font-family: "Roboto Mono", monospace;
+  user-select: none;
+}
+
+.custom-scrollbar {
+  /* Width for Chrome, Edge, and Safari */
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: oklch(0.269 0 0);
+    border-radius: 3px;
+  }
+
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: oklch(0.269 0 0) transparent;
 }
