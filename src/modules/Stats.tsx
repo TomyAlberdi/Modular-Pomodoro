@@ -1,9 +1,13 @@
 import { ResizablePanel } from "@/components/ui/resizable";
+import { usePanelContext } from "@/context/UsePanelContext";
 
 const Stats = () => {
+
+  const { statsPanelSize } = usePanelContext();
+
   return (
     <ResizablePanel
-      defaultSize={33}
+      defaultSize={statsPanelSize}
       className="flex justify-center items-center"
     >
       stats

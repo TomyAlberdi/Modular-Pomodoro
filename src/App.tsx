@@ -12,6 +12,7 @@ import CommandMenu from "@/modules/CommandMenu.tsx";
 import FloatingAdvice from "@/components/FloatingAdvice";
 import { useTimerContext } from "@/context/UseTimerContext";
 import { useEffect, useState } from "react";
+import { usePanelContext } from "@/context/UsePanelContext";
 
 function App() {
   const {
@@ -70,6 +71,9 @@ function App() {
 
   const [CommandMenuOpen, setCommandMenuOpen] = useState(false);
 
+  const { middlePanelSize } =
+    usePanelContext();
+
   return (
     <ResizablePanelGroup
       direction="horizontal"
@@ -88,7 +92,7 @@ function App() {
       <Pauses />
       <ResizableHandle withHandle />
       <ResizablePanel
-        defaultSize={30}
+        defaultSize={middlePanelSize}
         minSize={25}
         className="border-x flex justify-center items-center"
       >

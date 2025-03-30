@@ -1,9 +1,12 @@
 import { ResizablePanel } from "@/components/ui/resizable";
+import { usePanelContext } from "@/context/UsePanelContext";
 
 const Pauses = () => {
+  const { pausesPanelSize } = usePanelContext();
+
   return (
     <ResizablePanel
-      defaultSize={33}
+      defaultSize={pausesPanelSize}
       className="flex justify-center items-center"
     >
       pauses
