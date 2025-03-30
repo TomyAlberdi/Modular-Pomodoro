@@ -17,9 +17,9 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
   const [pomodoroCount, setPomodoroCount] = useState(0);
 
   // Timer duration states
-  const [pomodoroDuration, setPomodoroDuration] = useState(5);
-  const [shortBreakDuration, setShortBreakDuration] = useState(3);
-  const [longBreakDuration, setLongBreakDuration] = useState(10);
+  const [pomodoroDuration, setPomodoroDuration] = useState(1800);
+  const [shortBreakDuration, setShortBreakDuration] = useState(300);
+  const [longBreakDuration, setLongBreakDuration] = useState(900);
 
   // Timer control states
   const [isRunning, setIsRunning] = useState(false);
@@ -126,22 +126,26 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
     moveToNextTimer();
   };
 
-  // Updates the pomodoro timer duration
+  // Duration update functions
   const updatePomodoroDuration = (duration: number) => {
     setPomodoroDuration(duration);
-    resetTimer();
+    if (currentType === "pomodoro") {
+      setRemainingTime(duration);
+    }
   };
 
-  // Updates the short break timer duration
   const updateShortBreakDuration = (duration: number) => {
     setShortBreakDuration(duration);
-    resetTimer();
+    if (currentType === "shortBreak") {
+      setRemainingTime(duration);
+    }
   };
 
-  // Updates the long break timer duration
   const updateLongBreakDuration = (duration: number) => {
     setLongBreakDuration(duration);
-    resetTimer();
+    if (currentType === "longBreak") {
+      setRemainingTime(duration);
+    }
   };
 
   // Formats the remaining time

@@ -21,7 +21,7 @@ const Timer = () => {
   return (
     <ResizablePanel
       className="flex flex-col justify-center items-center gap-4"
-      minSize={33}
+      minSize={30}
     >
       <span className="text-xl">
         {currentType.charAt(0).toUpperCase() + currentType.slice(1)}
