@@ -14,8 +14,14 @@ import { useTimerContext } from "@/context/UseTimerContext";
 import { useEffect, useState } from "react";
 
 function App() {
-  const { isRunning, isStarted, startTimer, pauseTimer, resumeTimer } =
-    useTimerContext();
+  const {
+    isRunning,
+    isStarted,
+    startTimer,
+    pauseTimer,
+    resumeTimer,
+    currentType,
+  } = useTimerContext();
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -42,9 +48,14 @@ function App() {
     <ResizablePanelGroup
       direction="horizontal"
       className={
-        // TODO: Implement logic for new background colors for: Idle, Pomodoro, Short Break, Long Break
         "App min-h-screen min-w-screen flex justify-center items-center overflow-hidden transition-colors duration-500 ease-linear " +
-        (isRunning ? "bg-custom-sec" : "bg-custom-main")
+        (!isRunning
+          ? "bg-timer-idle"
+          : currentType === "pomodoro"
+          ? "bg-timer-pomodoro"
+          : currentType === "shortBreak"
+          ? "bg-timer-short-break"
+          : "bg-timer-long-break")
       }
     >
       <Pauses />

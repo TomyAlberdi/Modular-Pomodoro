@@ -40,8 +40,10 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
   /* New color variables */
-  --custom-main: oklch(0.37 0.1 200.32);
-  --custom-sec: oklch(0.181 0.033 251.832);
+  --timer-idle: oklch(0.3 0.03 240);
+  --timer-pomodoro: oklch(0.35 0.12 25);
+  --timer-short-break: oklch(0.4 0.08 180);
+  --timer-long-break: oklch(0.32 0.06 200);
 }
 
 .dark {
@@ -77,9 +79,10 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
   /* New color variables */
-  /* TODO: Add new background colors for: Idle, Pomodoro, Short Break, Long Break */
-  --custom-main: oklch(0.37 0.1 200.32);
-  --custom-sec: oklch(0.181 0.033 251.832);
+  --timer-idle: oklch(0.3 0.03 240);
+  --timer-pomodoro: oklch(0.35 0.12 25);
+  --timer-short-break: oklch(0.4 0.08 180);
+  --timer-long-break: oklch(0.32 0.06 200);
 }
 
 @theme inline {
@@ -119,8 +122,10 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   /* New color mappings */
-  --color-custom-main: var(--custom-main);
-  --color-custom-sec: var(--custom-sec);
+  --color-timer-idle: var(--timer-idle);
+  --color-timer-pomodoro: var(--timer-pomodoro);
+  --color-timer-short-break: var(--timer-short-break);
+  --color-timer-long-break: var(--timer-long-break);
 }
 
 @layer base {
