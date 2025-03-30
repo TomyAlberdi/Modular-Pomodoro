@@ -17,7 +17,6 @@ function App() {
   const { isRunning, isStarted, startTimer, pauseTimer, resumeTimer } =
     useTimerContext();
 
-  // BUG: Spacebar for start/pause/resume timer only work while pressing the key or after saving the file
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === " " || e.key === "Spacebar") {
@@ -35,8 +34,7 @@ function App() {
     return () => {
       document.removeEventListener("keydown", down);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isStarted, isRunning, startTimer, pauseTimer, resumeTimer]);
 
   const [CommandMenuOpen, setCommandMenuOpen] = useState(false);
 
