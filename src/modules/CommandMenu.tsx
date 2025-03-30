@@ -120,7 +120,12 @@ const CommandMenu = ({ Open, setOpen }: CommandMenuProps) => {
           </CommandItem>
         </CommandGroup>
         <CommandGroup heading="Modules">
-          <CommandItem onSelect={resetPanelSizes}>
+          <CommandItem
+            onSelect={() => {
+              resetPanelSizes();
+              setOpen(false);
+            }}
+          >
             <Grid2x2Check />
             Reset Layout
           </CommandItem>
