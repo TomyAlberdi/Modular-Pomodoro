@@ -1,4 +1,4 @@
-import { ReactNode, useState, useCallback, useRef } from "react";
+import { ReactNode, useState, useRef, useCallback, useEffect } from "react";
 import {
   TimerContext,
   TimerContextType,
@@ -17,9 +17,9 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
   const [pomodoroCount, setPomodoroCount] = useState(0);
 
   // Timer duration states
-  const [pomodoroDuration, setPomodoroDuration] = useState(1500);
-  const [shortBreakDuration, setShortBreakDuration] = useState(300);
-  const [longBreakDuration, setLongBreakDuration] = useState(900);
+  const [pomodoroDuration, setPomodoroDuration] = useState(5);
+  const [shortBreakDuration, setShortBreakDuration] = useState(3);
+  const [longBreakDuration, setLongBreakDuration] = useState(10);
 
   // Timer control states
   const [isRunning, setIsRunning] = useState(false);
@@ -27,51 +27,69 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
   const [remainingTime, setRemainingTime] = useState(pomodoroDuration);
   const timerIdRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Returns duration based on current timer type
-  const getCurrentDuration = useCallback(() => {
-    switch (currentType) {
-      case "pomodoro":
-        return pomodoroDuration;
-      case "shortBreak":
-        return shortBreakDuration;
-      case "longBreak":
-        return longBreakDuration;
+  // Centralized timer logic
+  const startCountdown = useCallback(() => {
+    if (timerIdRef.current) {
+      clearInterval(timerIdRef.current);
     }
-  }, [pomodoroDuration, shortBreakDuration, longBreakDuration, currentType]);
 
-  // Moves to the next timer type
-  const moveToNextTimer = useCallback(() => {
-    if (currentType === "pomodoro") {
-      const newCount = pomodoroCount + 1;
-      setPomodoroCount(newCount);
-      setCurrentType(newCount % 4 === 0 ? "longBreak" : "shortBreak");
-    } else {
-      setCurrentType("pomodoro");
-    }
-  }, [currentType, pomodoroCount]);
-
-  // Starts the timer
-  const startTimer = useCallback(() => {
     setIsRunning(true);
     setIsStarted(true);
-    setRemainingTime(getCurrentDuration());
+
     timerIdRef.current = setInterval(() => {
       setRemainingTime((prev) => {
         if (prev <= 1) {
           clearInterval(timerIdRef.current!);
-          setIsRunning(false);
-          moveToNextTimer();
           return 0;
         }
         return prev - 1;
       });
     }, 1000);
-  }, [getCurrentDuration, moveToNextTimer]);
+  }, []);
+
+  // Moves to the next timer type and updates state
+  const moveToNextTimer = useCallback(() => {
+    if (timerIdRef.current) {
+      clearInterval(timerIdRef.current);
+    }
+
+    let nextType: TimerType;
+    if (currentType === "pomodoro") {
+      setPomodoroCount((prev) => prev + 1);
+      nextType = (pomodoroCount + 1) % 4 === 0 ? "longBreak" : "shortBreak";
+    } else {
+      nextType = "pomodoro";
+    }
+
+    const nextDuration =
+      nextType === "pomodoro"
+        ? pomodoroDuration
+        : nextType === "shortBreak"
+        ? shortBreakDuration
+        : longBreakDuration;
+
+    setCurrentType(nextType);
+    setRemainingTime(nextDuration);
+    startCountdown();
+  }, [
+    currentType,
+    pomodoroCount,
+    pomodoroDuration,
+    shortBreakDuration,
+    longBreakDuration,
+    startCountdown,
+  ]);
+
+  // Starts the timer
+  const startTimer = useCallback(() => {
+    startCountdown();
+  }, [startCountdown]);
 
   // Pauses the timer
   const pauseTimer = useCallback(() => {
     if (timerIdRef.current) {
       clearInterval(timerIdRef.current);
+      timerIdRef.current = null;
       setIsRunning(false);
     }
   }, []);
@@ -79,68 +97,64 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
   // Resumes the timer
   const resumeTimer = useCallback(() => {
     if (!isRunning && remainingTime > 0) {
-      setIsRunning(true);
-      timerIdRef.current = setInterval(() => {
-        setRemainingTime((prev) => {
-          if (prev <= 1) {
-            clearInterval(timerIdRef.current!);
-            setIsRunning(false);
-            moveToNextTimer();
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
+      startCountdown();
     }
-  }, [isRunning, remainingTime, moveToNextTimer]);
+  }, [isRunning, remainingTime, startCountdown]);
 
-  // Cancels/Restarts the timer
-  const cancelTimer = useCallback(() => {
+  // Resets the timer
+  const resetTimer = useCallback(() => {
     if (timerIdRef.current) {
       clearInterval(timerIdRef.current);
+      timerIdRef.current = null;
     }
     setIsRunning(false);
     setIsStarted(false);
-    setRemainingTime(getCurrentDuration());
-  }, [getCurrentDuration]);
+    setCurrentType("pomodoro");
+    setRemainingTime(pomodoroDuration);
+    setPomodoroCount(0);
+  }, [pomodoroDuration]);
 
-  // Jumps to the next timer type
-  const skipTimer = useCallback(() => {
-    if (timerIdRef.current) {
-      clearInterval(timerIdRef.current);
+  // Auto-transition to next timer when current one ends
+  useEffect(() => {
+    if (remainingTime === 0 && isStarted) {
+      moveToNextTimer();
     }
+  }, [remainingTime, isStarted, moveToNextTimer]);
+
+  // Force jumps to the next timer
+  const skipTimer = () => {
     moveToNextTimer();
-    setIsRunning(false);
-    setIsStarted(false);
-    setRemainingTime(getCurrentDuration());
-  }, [moveToNextTimer, getCurrentDuration]);
+  };
 
   // Updates the pomodoro timer duration
-  const updatePomodoroDuration = useCallback(
-    (duration: number) => {
-      setPomodoroDuration(duration);
-      if (currentType === "pomodoro") setRemainingTime(duration);
-    },
-    [currentType]
-  );
+  const updatePomodoroDuration = (duration: number) => {
+    setPomodoroDuration(duration);
+    resetTimer();
+  };
 
   // Updates the short break timer duration
-  const updateShortBreakDuration = useCallback(
-    (duration: number) => {
-      setShortBreakDuration(duration);
-      if (currentType === "shortBreak") setRemainingTime(duration);
-    },
-    [currentType]
-  );
+  const updateShortBreakDuration = (duration: number) => {
+    setShortBreakDuration(duration);
+    resetTimer();
+  };
 
   // Updates the long break timer duration
-  const updateLongBreakDuration = useCallback(
-    (duration: number) => {
-      setLongBreakDuration(duration);
-      if (currentType === "longBreak") setRemainingTime(duration);
-    },
-    [currentType]
-  );
+  const updateLongBreakDuration = (duration: number) => {
+    setLongBreakDuration(duration);
+    resetTimer();
+  };
+
+  // Formats the remaining time
+  const formatRemainingTime = (seconds: number) => {
+    const formattedTime = `${
+      Math.floor(seconds / 60) > 0 ? Math.floor(seconds / 60) + ":" : ""
+    }${
+      Math.floor(seconds % 60) < 10
+        ? "0" + Math.floor(seconds % 60)
+        : Math.floor(seconds % 60)
+    }`;
+    return formattedTime;
+  };
 
   const exportData: TimerContextType = {
     currentType,
@@ -154,11 +168,12 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
     startTimer,
     pauseTimer,
     resumeTimer,
-    cancelTimer,
+    resetTimer,
     skipTimer,
     updatePomodoroDuration,
     updateShortBreakDuration,
     updateLongBreakDuration,
+    formatRemainingTime,
   };
 
   return (
