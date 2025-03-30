@@ -10,7 +10,7 @@ const Pauses = () => {
       defaultSize={pausesPanelSize}
       className="flex justify-center items-center"
     >
-      pauses
+      (WIP) Pauses
     </ResizablePanel>
   );
 };

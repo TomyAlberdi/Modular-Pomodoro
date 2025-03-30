@@ -12,7 +12,7 @@ const Streak = () => {
       className="flex justify-center items-center"
       defaultSize={streakPanelSize}
     >
-      Completed Pomodoros: {pomodoroCount}
+      (WIP) Completed Pomodoros: {pomodoroCount}
     </ResizablePanel>
   );
 };

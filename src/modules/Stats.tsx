@@ -10,7 +10,7 @@ const Stats = () => {
       defaultSize={statsPanelSize}
       className="flex justify-center items-center"
     >
-      stats
+      (WIP) Stats
     </ResizablePanel>
   );
 };
