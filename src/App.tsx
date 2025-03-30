@@ -11,10 +11,32 @@ import Variables from "@/modules/Variables";
 import CommandMenu from "@/modules/CommandMenu.tsx";
 import FloatingAdvice from "@/components/FloatingAdvice";
 import { useTimerContext } from "@/context/UseTimerContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
-  const { isRunning } = useTimerContext();
+  const { isRunning, isStarted, startTimer, pauseTimer, resumeTimer } =
+    useTimerContext();
+
+  // BUG: Spacebar for start/pause/resume timer only work while pressing the key or after saving the file
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === " " || e.key === "Spacebar") {
+        e.preventDefault();
+        if (!isStarted) {
+          startTimer();
+        } else if (isRunning) {
+          pauseTimer();
+        } else {
+          resumeTimer();
+        }
+      }
+    };
+    document.addEventListener("keydown", down);
+    return () => {
+      document.removeEventListener("keydown", down);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const [CommandMenuOpen, setCommandMenuOpen] = useState(false);
 
