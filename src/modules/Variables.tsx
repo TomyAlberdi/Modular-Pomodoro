@@ -24,7 +24,7 @@ const Variables = () => {
   return (
     <ResizablePanel className="flex flex-col justify-center items-center gap-2">
       <span className="text-lg font-semibold">Time (Minutes)</span>
-      <section className="flex flex-col justify-center items-center gap-2 w-full">
+      <section className="flex flex-col justify-center items-center gap-2 w-[90%]">
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label htmlFor="pomodoroDuration">Pomodoro Duration</Label>
           <Input

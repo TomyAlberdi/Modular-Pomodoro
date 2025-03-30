@@ -83,15 +83,20 @@ function App() {
           ? "bg-timer-short-break"
           : "bg-timer-long-break")
       }
+      autoSaveId={"horizontalPanels"}
     >
       <Pauses />
       <ResizableHandle withHandle />
       <ResizablePanel
-        defaultSize={34}
+        defaultSize={30}
         minSize={25}
         className="border-x flex justify-center items-center"
       >
-        <ResizablePanelGroup direction="vertical" className="min-h-screen">
+        <ResizablePanelGroup
+          direction="vertical"
+          className="min-h-screen"
+          autoSaveId={"verticalPanels"}
+        >
           <Variables />
           <ResizableHandle withHandle />
           <Timer />
