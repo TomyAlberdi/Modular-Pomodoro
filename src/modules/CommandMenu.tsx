@@ -4,6 +4,7 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandList,
   CommandShortcut,
 } from "@/components/ui/command";
 import { useTimerContext } from "@/context/UseTimerContext";
@@ -44,42 +45,42 @@ const CommandMenu = ({ Open, setOpen }: CommandMenuProps) => {
     setOpen(false);
   };
 
-  // TODO: Implement arrow navigation and enter execution for commands
-
   return (
     <CommandDialog open={Open} onOpenChange={setOpen}>
       <CommandInput placeholder="Type a command or search..." />
-      <CommandEmpty>No results found.</CommandEmpty>
-      <CommandGroup heading="Timer">
-        <CommandItem onSelect={handleStartCommand}>
-          {isRunning ? (
-            <>
-              <PauseCircle />
-              <span>Pause Timer</span>
-            </>
-          ) : isStarted ? (
-            <>
-              <PlayCircle />
-              <span>Resume Timer</span>
-            </>
-          ) : (
-            <>
-              <PlayCircle />
-              <span>Start Timer</span>
-            </>
-          )}
-          <CommandShortcut>Space</CommandShortcut>
-        </CommandItem>
-        {/* TODO: Implement reset timer command functionality */}
-        <CommandItem>
-          <RotateCcw />
-          <span>Reset Timer</span>
-        </CommandItem>
-        <CommandItem disabled>
-          <SquarePen />
-          <span>Update Timer Values</span>
-        </CommandItem>
-      </CommandGroup>
+      <CommandList>
+        <CommandEmpty>No results found.</CommandEmpty>
+        <CommandGroup heading="Timer">
+          <CommandItem onSelect={handleStartCommand}>
+            {isRunning ? (
+              <>
+                <PauseCircle />
+                <span>Pause Timer</span>
+              </>
+            ) : isStarted ? (
+              <>
+                <PlayCircle />
+                <span>Resume Timer</span>
+              </>
+            ) : (
+              <>
+                <PlayCircle />
+                <span>Start Timer</span>
+              </>
+            )}
+            <CommandShortcut>Space</CommandShortcut>
+          </CommandItem>
+          {/* TODO: Implement reset timer command functionality */}
+          <CommandItem>
+            <RotateCcw />
+            <span>Reset Timer</span>
+          </CommandItem>
+          <CommandItem disabled>
+            <SquarePen />
+            <span>Update Timer Values</span>
+          </CommandItem>
+        </CommandGroup>
+      </CommandList>
     </CommandDialog>
   );
 };
