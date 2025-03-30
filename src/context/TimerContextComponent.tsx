@@ -31,6 +31,13 @@ const getStoredSettings = (): TimerSettings => {
 const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
   children,
 }) => {
+  // Timer audio reference
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // Initialize audio
+  useEffect(() => {
+    audioRef.current = new Audio("/Modular-Pomodoro/new-timer.mp3");
+  }, []);
 
   // Retrieve stored settings or use default values
   const storedSettings = getStoredSettings();
@@ -44,9 +51,15 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
   const [pomodoroCount, setPomodoroCount] = useState(0);
 
   // Timer duration states
-  const [pomodoroDuration, setPomodoroDuration] = useState(storedSettings.pomodoroDuration);
-  const [shortBreakDuration, setShortBreakDuration] = useState(storedSettings.shortBreakDuration);
-  const [longBreakDuration, setLongBreakDuration] = useState(storedSettings.longBreakDuration);
+  const [pomodoroDuration, setPomodoroDuration] = useState(
+    storedSettings.pomodoroDuration
+  );
+  const [shortBreakDuration, setShortBreakDuration] = useState(
+    storedSettings.shortBreakDuration
+  );
+  const [longBreakDuration, setLongBreakDuration] = useState(
+    storedSettings.longBreakDuration
+  );
 
   // Timer control states
   const [isRunning, setIsRunning] = useState(false);
@@ -78,6 +91,12 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
   const moveToNextTimer = useCallback(() => {
     if (timerIdRef.current) {
       clearInterval(timerIdRef.current);
+    }
+
+    if (audioRef.current) {
+      audioRef.current.play().catch((error) => {
+        console.error("Error playing audio:", error);
+      });
     }
 
     let nextType: TimerType;
@@ -158,7 +177,7 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
     setPomodoroDuration(duration);
     saveSettings({
       ...storedSettings,
-      pomodoroDuration: duration
+      pomodoroDuration: duration,
     });
     if (currentType === "pomodoro") {
       setRemainingTime(duration);
@@ -169,7 +188,7 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
     setShortBreakDuration(duration);
     saveSettings({
       ...storedSettings,
-      shortBreakDuration: duration
+      shortBreakDuration: duration,
     });
     if (currentType === "shortBreak") {
       setRemainingTime(duration);
@@ -180,7 +199,7 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
     setLongBreakDuration(duration);
     saveSettings({
       ...storedSettings,
-      longBreakDuration: duration
+      longBreakDuration: duration,
     });
     if (currentType === "longBreak") {
       setRemainingTime(duration);
