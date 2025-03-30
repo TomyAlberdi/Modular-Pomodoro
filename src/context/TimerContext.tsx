@@ -8,6 +8,7 @@ export interface TimerContextType {
   isStarted: boolean;
   remainingTime: number;
   pomodoroCount: number;
+  formatRemainingTime: (seconds: number) => string;
 
   // Timer durations
   pomodoroDuration: number;
@@ -18,7 +19,7 @@ export interface TimerContextType {
   startTimer: () => void;
   pauseTimer: () => void;
   resumeTimer: () => void;
-  cancelTimer: () => void;
+  resetTimer: () => void;
   skipTimer: () => void;
 
   // Duration setters

@@ -14,16 +14,9 @@ const Timer = () => {
     resumeTimer,
     currentType,
     skipTimer,
-    cancelTimer,
+    resetTimer,
+    formatRemainingTime,
   } = useTimerContext();
-
-  const formatTime = () => {
-    const minutes = Math.floor(remainingTime / 60);
-    const seconds = Math.floor(remainingTime % 60);
-    return `${minutes > 0 ? minutes + ":" : ""}${
-      seconds < 10 ? "0" + seconds : seconds
-    }`;
-  };
 
   return (
     <ResizablePanel
@@ -33,12 +26,14 @@ const Timer = () => {
       <span className="text-xl">
         {currentType.charAt(0).toUpperCase() + currentType.slice(1)}
       </span>
-      <span className="text-6xl font-bold">{formatTime()}</span>
+      <span className="text-6xl font-bold">
+        {formatRemainingTime(remainingTime)}
+      </span>
       <div className="flex gap-4">
         <Button
           variant={"outline"}
           className="cursor-pointer"
-          onClick={cancelTimer}
+          onClick={resetTimer}
         >
           <Square />
         </Button>
