@@ -26,31 +26,6 @@ const PanelContextComponent: React.FC<PanelContextComponentProps> = ({
   const timerPanel = useRef<ImperativePanelHandle>(null);
   const streakPanel = useRef<ImperativePanelHandle>(null);
 
-  //BUG: Show panels after hiding them doesn't work
-  const togglePausePanel = () => {
-    const newSize = pausesPanelSize > 0 ? 0 : pausesPanelSize;
-    setPausesPanelSize(newSize);
-    pausesPanel.current?.resize(newSize);
-  };
-
-  const toggleStatsPanel = () => {
-    const newSize = statsPanelSize > 0 ? 0 : statsPanelSize;
-    setStatsPanelSize(newSize);
-    statsPanel.current?.resize(newSize);
-  };
-
-  const toggleVariablesPanel = () => {
-    const newSize = variablesPanelSize > 0 ? 0 : variablesPanelSize;
-    setVariablesPanelSize(newSize);
-    variablesPanel.current?.resize(newSize);
-  };
-
-  const toggleStreakPanel = () => {
-    const newSize = streakPanelSize > 0 ? 0 : streakPanelSize;
-    setStreakPanelSize(newSize);
-    streakPanel.current?.resize(newSize);
-  };
-
   const resetPanelSizes = () => {
     setPausesPanelSize(33);
     setMiddlePanelSize(33);
@@ -58,8 +33,6 @@ const PanelContextComponent: React.FC<PanelContextComponentProps> = ({
     setVariablesPanelSize(33);
     setTimerPanelSize(33);
     setStreakPanelSize(33);
-
-    console.log("Attempting to reset panel sizes");
 
     pausesPanel.current?.resize(33);
     middlePanel.current?.resize(33);
@@ -82,10 +55,6 @@ const PanelContextComponent: React.FC<PanelContextComponentProps> = ({
     variablesPanelSize,
     timerPanelSize,
     streakPanelSize,
-    togglePausePanel,
-    toggleStatsPanel,
-    toggleVariablesPanel,
-    toggleStreakPanel,
     resetPanelSizes,
   };
 

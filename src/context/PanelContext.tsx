@@ -19,10 +19,6 @@ export interface PanelContextType {
   streakPanelSize: number;
 
   // Panel controls
-  togglePausePanel: () => void;
-  toggleStatsPanel: () => void;
-  toggleVariablesPanel: () => void;
-  toggleStreakPanel: () => void;
   resetPanelSizes: () => void;
 }
 

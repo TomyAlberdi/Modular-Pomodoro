@@ -71,8 +71,7 @@ function App() {
 
   const [CommandMenuOpen, setCommandMenuOpen] = useState(false);
 
-  const { middlePanelSize, middlePanel } =
-    usePanelContext();
+  const { middlePanelSize, middlePanel } = usePanelContext();
 
   return (
     <ResizablePanelGroup
@@ -87,6 +86,7 @@ function App() {
           ? "bg-timer-short-break"
           : "bg-timer-long-break")
       }
+      autoSaveId={"horizontalPanelGroup"}
     >
       <Pauses />
       <ResizableHandle withHandle />
@@ -99,6 +99,7 @@ function App() {
         <ResizablePanelGroup
           direction="vertical"
           className="min-h-screen"
+          autoSaveId={"verticalPanelGroup"}
         >
           <Variables />
           <ResizableHandle withHandle />

@@ -10,8 +10,6 @@ import {
 import { usePanelContext } from "@/context/UsePanelContext";
 import { useTimerContext } from "@/context/UseTimerContext";
 import {
-  Eye,
-  EyeOff,
   Grid2x2Check,
   PauseCircle,
   PlayCircle,
@@ -63,14 +61,6 @@ const CommandMenu = ({ Open, setOpen }: CommandMenuProps) => {
 
   const {
     resetPanelSizes,
-    pausesPanelSize,
-    togglePausePanel,
-    statsPanelSize,
-    toggleStatsPanel,
-    variablesPanelSize,
-    toggleVariablesPanel,
-    streakPanelSize,
-    toggleStreakPanel,
   } = usePanelContext();
 
   return (
@@ -128,58 +118,6 @@ const CommandMenu = ({ Open, setOpen }: CommandMenuProps) => {
           >
             <Grid2x2Check />
             Reset Layout
-          </CommandItem>
-          <CommandItem onSelect={togglePausePanel}>
-            {pausesPanelSize > 0 ? (
-              <>
-                <EyeOff />
-                <span>Hide Pauses Module</span>
-              </>
-            ) : (
-              <>
-                <Eye />
-                <span>Show Pauses Module</span>
-              </>
-            )}
-          </CommandItem>
-          <CommandItem onSelect={toggleStatsPanel}>
-            {statsPanelSize > 0 ? (
-              <>
-                <EyeOff />
-                <span>Hide Stats Module</span>
-              </>
-            ) : (
-              <>
-                <Eye />
-                <span>Show Stats Module</span>
-              </>
-            )}
-          </CommandItem>
-          <CommandItem onSelect={toggleVariablesPanel}>
-            {variablesPanelSize > 0 ? (
-              <>
-                <EyeOff />
-                <span>Hide Variables Module</span>
-              </>
-            ) : (
-              <>
-                <Eye />
-                <span>Show Variables Module</span>
-              </>
-            )}
-          </CommandItem>
-          <CommandItem onSelect={toggleStreakPanel}>
-            {streakPanelSize > 0 ? (
-              <>
-                <EyeOff />
-                <span>Hide Streak Module</span>
-              </>
-            ) : (
-              <>
-                <Eye />
-                <span>Show Streak Module</span>
-              </>
-            )}
           </CommandItem>
         </CommandGroup>
       </CommandList>
