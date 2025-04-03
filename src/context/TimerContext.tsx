@@ -7,7 +7,9 @@ export interface TimerContextType {
   isRunning: boolean;
   isStarted: boolean;
   remainingTime: number;
+  currentStreak: number;
   pomodoroCount: number;
+  totalTime: number;
   formatRemainingTime: (seconds: number) => string;
 
   // Timer durations
@@ -22,10 +24,11 @@ export interface TimerContextType {
   resetTimer: () => void;
   skipTimer: () => void;
 
-  // Duration setters
+  // Duration & Stats setters
   updatePomodoroDuration: (duration: number) => void;
   updateShortBreakDuration: (duration: number) => void;
   updateLongBreakDuration: (duration: number) => void;
+  resetStats: () => void;
 }
 
 export const TimerContext = createContext<TimerContextType | null>(null);

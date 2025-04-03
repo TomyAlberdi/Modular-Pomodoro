@@ -12,6 +12,7 @@ const Variables = () => {
     updatePomodoroDuration,
     updateShortBreakDuration,
     updateLongBreakDuration,
+    isStarted
   } = useTimerContext();
 
   const secondsToMinutes = (seconds: number) => {
@@ -30,13 +31,13 @@ const Variables = () => {
       defaultSize={variablesPanelSize}
       ref={variablesPanel}
     >
-      <span className="text-lg font-semibold">Time (Minutes)</span>
       <section className="flex flex-col justify-center items-center gap-2 w-[90%]">
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label htmlFor="pomodoroDuration">Pomodoro Duration</Label>
           <Input
             type="number"
             id="pomodoroDuration"
+            disabled={isStarted}
             value={secondsToMinutes(pomodoroDuration)}
             onChange={(e) => {
               const value = Math.max(1, Number(e.target.value));
@@ -47,7 +48,9 @@ const Variables = () => {
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label htmlFor="shortBreakDuration">Short Break Duration</Label>
           <Input
+            type="number"
             id="shortBreakDuration"
+            disabled={isStarted}
             value={secondsToMinutes(shortBreakDuration)}
             onChange={(e) => {
               const value = Math.max(1, Number(e.target.value));
@@ -58,7 +61,9 @@ const Variables = () => {
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label htmlFor="longBreakDuration">Long Break Duration</Label>
           <Input
+            type="number"
             id="longBreakDuration"
+            disabled={isStarted}
             value={secondsToMinutes(longBreakDuration)}
             onChange={(e) => {
               const value = Math.max(1, Number(e.target.value));
