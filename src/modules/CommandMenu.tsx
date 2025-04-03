@@ -11,6 +11,7 @@ import { usePanelContext } from "@/context/UsePanelContext";
 import { useTimerContext } from "@/context/UseTimerContext";
 import {
   Grid2x2Check,
+  ListRestart,
   PauseCircle,
   PlayCircle,
   RotateCcw,
@@ -46,6 +47,7 @@ const CommandMenu = ({ Open, setOpen }: CommandMenuProps) => {
     resumeTimer,
     resetTimer,
     skipTimer,
+    resetStats,
   } = useTimerContext();
 
   const handleStartCommand = () => {
@@ -59,9 +61,7 @@ const CommandMenu = ({ Open, setOpen }: CommandMenuProps) => {
     setOpen(false);
   };
 
-  const {
-    resetPanelSizes,
-  } = usePanelContext();
+  const { resetPanelSizes } = usePanelContext();
 
   return (
     <CommandDialog open={Open} onOpenChange={setOpen}>
@@ -118,6 +118,17 @@ const CommandMenu = ({ Open, setOpen }: CommandMenuProps) => {
           >
             <Grid2x2Check />
             Reset Layout
+          </CommandItem>
+        </CommandGroup>
+        <CommandGroup heading="Data">
+          <CommandItem
+            onSelect={() => {
+              resetStats();
+              setOpen(false);
+            }}
+          >
+            <ListRestart />
+            Reset Stats
           </CommandItem>
         </CommandGroup>
       </CommandList>

@@ -9,34 +9,35 @@ interface TimerContextComponentProps {
   children: ReactNode;
 }
 
+// Storage interfaces
 export interface TimerSettings {
   pomodoroDuration: number;
   shortBreakDuration: number;
   longBreakDuration: number;
 }
-
 export interface UserData {
   pomodoroCount: number;
 }
 
+// Default storage values
 const DEFAULT_SETTINGS: TimerSettings = {
   pomodoroDuration: 1800,
   shortBreakDuration: 300,
   longBreakDuration: 900,
 };
-
 const DEFAULT_USER_DATA: UserData = {
   pomodoroCount: 0,
 };
 
+// Storage keys
 const STORAGE_KEY = "timer_settings";
 const USER_DATA_KEY = "user_data";
 
+// Storage getters
 const getStoredSettings = (): TimerSettings => {
   const stored = localStorage.getItem(STORAGE_KEY);
   return stored ? JSON.parse(stored) : DEFAULT_SETTINGS;
 };
-
 const getStoredUserData = (): UserData => {
   const stored = localStorage.getItem(USER_DATA_KEY);
   return stored ? JSON.parse(stored) : DEFAULT_USER_DATA;
@@ -96,6 +97,15 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
     storedUserData.pomodoroCount
   );
   const [currentStreak, setCurrentStreak] = useState<number>(0);
+
+  const resetStats = () => {
+    setPomodoroCount(0);
+    setCurrentStreak(0);
+    saveSettings(undefined, {
+      ...storedUserData,
+      pomodoroCount: 0,
+    });
+  }
 
   // Timer duration states
   const [pomodoroDuration, setPomodoroDuration] = useState(
@@ -293,6 +303,7 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
     updateShortBreakDuration,
     updateLongBreakDuration,
     formatRemainingTime,
+    resetStats
   };
 
   return (
