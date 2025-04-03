@@ -1,6 +1,7 @@
 import { ResizablePanel } from "@/components/ui/resizable";
 import { usePanelContext } from "@/context/UsePanelContext";
 import { useTimerContext } from "@/context/UseTimerContext";
+import { Flame, Frown } from "lucide-react";
 
 const Streak = () => {
   const { currentStreak } = useTimerContext();
@@ -9,10 +10,21 @@ const Streak = () => {
   return (
     <ResizablePanel
       ref={streakPanel}
-      className="flex justify-center items-center"
+      className="flex flex-col justify-center items-center gap-5"
       defaultSize={streakPanelSize}
     >
-      (WIP) Current Pomodoro Streak: {currentStreak}
+      <span>Current Streak: {currentStreak}</span>
+      <div className="flex justify-center items-center gap-2 flex-wrap w-4/5">
+        {currentStreak === 0 ? (
+          <Frown size={30} />
+        ) : (
+          Array(currentStreak)
+            .fill(0)
+            .map((_, index) => {
+              return <Flame key={index} />;
+            })
+        )}
+      </div>
     </ResizablePanel>
   );
 };
