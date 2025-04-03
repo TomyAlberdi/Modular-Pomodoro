@@ -3,7 +3,7 @@ import { usePanelContext } from "@/context/UsePanelContext";
 import { useTimerContext } from "@/context/UseTimerContext";
 
 const Streak = () => {
-  const { pomodoroCount } = useTimerContext();
+  const { currentStreak } = useTimerContext();
   const { streakPanelSize, streakPanel } = usePanelContext();
   //TODO: Design & implement streak panel
   return (
@@ -12,7 +12,7 @@ const Streak = () => {
       className="flex justify-center items-center"
       defaultSize={streakPanelSize}
     >
-      (WIP) Completed Pomodoros: {pomodoroCount}
+      (WIP) Current Pomodoro Streak: {currentStreak}
     </ResizablePanel>
   );
 };

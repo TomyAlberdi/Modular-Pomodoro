@@ -15,17 +15,31 @@ export interface TimerSettings {
   longBreakDuration: number;
 }
 
+export interface UserData {
+  pomodoroCount: number;
+}
+
 const DEFAULT_SETTINGS: TimerSettings = {
   pomodoroDuration: 1800,
   shortBreakDuration: 300,
   longBreakDuration: 900,
 };
 
+const DEFAULT_USER_DATA: UserData = {
+  pomodoroCount: 0,
+};
+
 const STORAGE_KEY = "timer_settings";
+const USER_DATA_KEY = "user_data";
 
 const getStoredSettings = (): TimerSettings => {
   const stored = localStorage.getItem(STORAGE_KEY);
   return stored ? JSON.parse(stored) : DEFAULT_SETTINGS;
+};
+
+const getStoredUserData = (): UserData => {
+  const stored = localStorage.getItem(USER_DATA_KEY);
+  return stored ? JSON.parse(stored) : DEFAULT_USER_DATA;
 };
 
 const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
@@ -65,15 +79,23 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
 
   // Retrieve stored settings or use default values
   const storedSettings = getStoredSettings();
+  const storedUserData = getStoredUserData();
 
-  const saveSettings = (settings: TimerSettings) => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+  const saveSettings = (settings?: TimerSettings, userData?: UserData) => {
+    if (settings) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+    }
+    if (userData) {
+      localStorage.setItem(USER_DATA_KEY, JSON.stringify(userData));
+    }
   };
 
   // Timer type and count states
   const [currentType, setCurrentType] = useState<TimerType>("pomodoro");
-  //TODO: Save pomodoro count in localStorage
-  const [pomodoroCount, setPomodoroCount] = useState(0);
+  const [pomodoroCount, setPomodoroCount] = useState(
+    storedUserData.pomodoroCount
+  );
+  const [currentStreak, setCurrentStreak] = useState<number>(0);
 
   // Timer duration states
   const [pomodoroDuration, setPomodoroDuration] = useState(
@@ -126,7 +148,12 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
 
     let nextType: TimerType;
     if (currentType === "pomodoro") {
+      saveSettings(undefined, {
+        ...storedUserData,
+        pomodoroCount: pomodoroCount + 1,
+      });
       setPomodoroCount((prev) => prev + 1);
+      setCurrentStreak((prev) => prev + 1);
       nextType = (pomodoroCount + 1) % 4 === 0 ? "longBreak" : "shortBreak";
       sendNotification("Break Time!");
     } else {
@@ -152,6 +179,7 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
     longBreakDuration,
     startCountdown,
     sendNotification,
+    storedUserData,
   ]);
 
   // Starts the timer
@@ -185,7 +213,7 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
     setIsStarted(false);
     setCurrentType("pomodoro");
     setRemainingTime(pomodoroDuration);
-    setPomodoroCount(0);
+    setCurrentStreak(0);
   }, [pomodoroDuration]);
 
   // Auto-transition to next timer when current one ends
@@ -201,7 +229,6 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
   };
 
   // Duration update functions
-  //FIXME disable update duration functions if timer is running
   const updatePomodoroDuration = (duration: number) => {
     setPomodoroDuration(duration);
     saveSettings({
@@ -253,6 +280,7 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
     isStarted,
     remainingTime,
     pomodoroCount,
+    currentStreak,
     pomodoroDuration,
     shortBreakDuration,
     longBreakDuration,
