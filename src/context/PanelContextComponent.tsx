@@ -26,6 +26,7 @@ const PanelContextComponent: React.FC<PanelContextComponentProps> = ({
   const timerPanel = useRef<ImperativePanelHandle>(null);
   const streakPanel = useRef<ImperativePanelHandle>(null);
 
+  //BUG: Show panels after hiding them doesn't work
   const togglePausePanel = () => {
     const newSize = pausesPanelSize > 0 ? 0 : pausesPanelSize;
     setPausesPanelSize(newSize);

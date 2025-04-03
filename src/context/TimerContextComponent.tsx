@@ -201,6 +201,7 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
   };
 
   // Duration update functions
+  //FIXME disable update duration functions if timer is running
   const updatePomodoroDuration = (duration: number) => {
     setPomodoroDuration(duration);
     saveSettings({
