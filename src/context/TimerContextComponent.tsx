@@ -17,6 +17,7 @@ export interface TimerSettings {
 }
 export interface UserData {
   pomodoroCount: number;
+  totalTime: number;
 }
 
 // Default storage values
@@ -27,6 +28,7 @@ const DEFAULT_SETTINGS: TimerSettings = {
 };
 const DEFAULT_USER_DATA: UserData = {
   pomodoroCount: 0,
+  totalTime: 0,
 };
 
 // Storage keys
@@ -96,16 +98,19 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
   const [pomodoroCount, setPomodoroCount] = useState(
     storedUserData.pomodoroCount
   );
+  const [totalTime, setTotalTime] = useState(storedUserData.totalTime);
   const [currentStreak, setCurrentStreak] = useState<number>(0);
 
   const resetStats = () => {
     setPomodoroCount(0);
     setCurrentStreak(0);
+    setTotalTime(0);
     saveSettings(undefined, {
       ...storedUserData,
       pomodoroCount: 0,
+      totalTime: 0,
     });
-  }
+  };
 
   // Timer duration states
   const [pomodoroDuration, setPomodoroDuration] = useState(
@@ -161,9 +166,11 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
       saveSettings(undefined, {
         ...storedUserData,
         pomodoroCount: pomodoroCount + 1,
+        totalTime: totalTime + pomodoroDuration,
       });
       setPomodoroCount((prev) => prev + 1);
       setCurrentStreak((prev) => prev + 1);
+      setTotalTime((prev) => prev + pomodoroDuration);
       nextType = (pomodoroCount + 1) % 4 === 0 ? "longBreak" : "shortBreak";
       sendNotification("Break Time!");
     } else {
@@ -190,6 +197,7 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
     startCountdown,
     sendNotification,
     storedUserData,
+    totalTime,
   ]);
 
   // Starts the timer
@@ -303,7 +311,8 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
     updateShortBreakDuration,
     updateLongBreakDuration,
     formatRemainingTime,
-    resetStats
+    resetStats,
+    totalTime,
   };
 
   return (

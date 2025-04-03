@@ -1,11 +1,11 @@
 import { ResizablePanel } from "@/components/ui/resizable";
 import { usePanelContext } from "@/context/UsePanelContext";
 import { useTimerContext } from "@/context/UseTimerContext";
-import { AlarmClockCheck } from "lucide-react";
+import { AlarmClockCheck, Hourglass } from "lucide-react";
 
 const Stats = () => {
   const { statsPanelSize, statsPanel } = usePanelContext();
-  const { pomodoroCount } = useTimerContext();
+  const { pomodoroCount, totalTime } = useTimerContext();
 
   return (
     <ResizablePanel
@@ -19,6 +19,13 @@ const Stats = () => {
           <AlarmClockCheck size={24} />
           Completed Pomodoros:
           <span className="text-xl font-semibold">{pomodoroCount}</span>
+        </div>
+        <div className="flex flex-row justify-start items-center gap-2">
+          <Hourglass size={24} />
+          Minutes Focused:
+          <span className="text-xl font-semibold">
+            {Math.floor(totalTime / 60)}
+          </span>
         </div>
       </section>
     </ResizablePanel>

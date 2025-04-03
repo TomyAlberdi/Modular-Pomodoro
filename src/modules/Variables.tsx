@@ -12,7 +12,7 @@ const Variables = () => {
     updatePomodoroDuration,
     updateShortBreakDuration,
     updateLongBreakDuration,
-    isRunning
+    isStarted
   } = useTimerContext();
 
   const secondsToMinutes = (seconds: number) => {
@@ -37,7 +37,7 @@ const Variables = () => {
           <Input
             type="number"
             id="pomodoroDuration"
-            disabled={isRunning}
+            disabled={isStarted}
             value={secondsToMinutes(pomodoroDuration)}
             onChange={(e) => {
               const value = Math.max(1, Number(e.target.value));
@@ -50,7 +50,7 @@ const Variables = () => {
           <Input
             type="number"
             id="shortBreakDuration"
-            disabled={isRunning}
+            disabled={isStarted}
             value={secondsToMinutes(shortBreakDuration)}
             onChange={(e) => {
               const value = Math.max(1, Number(e.target.value));
@@ -63,7 +63,7 @@ const Variables = () => {
           <Input
             type="number"
             id="longBreakDuration"
-            disabled={isRunning}
+            disabled={isStarted}
             value={secondsToMinutes(longBreakDuration)}
             onChange={(e) => {
               const value = Math.max(1, Number(e.target.value));
