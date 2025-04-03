@@ -36,7 +36,7 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
 
   // Initialize audio
   useEffect(() => {
-    audioRef.current = new Audio("/Modular-Pomodoro/new-timer.mp3");
+    audioRef.current = new Audio("/new-timer.mp3");
   }, []);
 
   // Notification permission state
@@ -56,7 +56,7 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
     (title: string) => {
       if (notificationPermission === "granted") {
         new Notification(title, {
-          icon: "/Modular-Pomodoro/timer.svg",
+          icon: "/timer.svg",
         });
       }
     },

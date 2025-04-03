@@ -10,7 +10,6 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  base: "/Modular-Pomodoro/",
   build: {
     outDir: "dist",
   },
