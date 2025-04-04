@@ -1,4 +1,5 @@
 import { createContext } from "react";
+import { WeeklyStreak } from "@/context/TimerContextComponent";
 
 export type TimerType = 'pomodoro' | 'shortBreak' | 'longBreak';
 
@@ -10,6 +11,7 @@ export interface TimerContextType {
   currentStreak: number;
   pomodoroCount: number;
   totalTime: number;
+  weeklyStreak: Array<WeeklyStreak>;
   formatRemainingTime: (seconds: number) => string;
 
   // Timer durations

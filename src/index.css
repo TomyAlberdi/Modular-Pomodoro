@@ -44,6 +44,8 @@
   --timer-pomodoro: oklch(0.35 0.12 25);
   --timer-short-break: oklch(0.4 0.08 180);
   --timer-long-break: oklch(0.32 0.06 200);
+  --status-true: oklch(0.85 0.12 145);
+  --status-false: oklch(0.75 0.15 30);
 }
 
 .dark {
@@ -83,6 +85,8 @@
   --timer-pomodoro: oklch(0.35 0.12 25);
   --timer-short-break: oklch(0.4 0.08 180);
   --timer-long-break: oklch(0.32 0.06 200);
+  --status-true: oklch(0.85 0.12 145);
+  --status-false: oklch(0.75 0.15 30);
 }
 
 @theme inline {
@@ -126,6 +130,8 @@
   --color-timer-pomodoro: var(--timer-pomodoro);
   --color-timer-short-break: var(--timer-short-break);
   --color-timer-long-break: var(--timer-long-break);
+  --color-status-true: var(--status-true);
+  --color-status-false: var(--status-false);
 }
 
 @layer base {
