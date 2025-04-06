@@ -4,28 +4,10 @@ import {
   TimerContextType,
   TimerType,
 } from "@/context/TimerContext";
+import { TimerSettings, UserData, WeeklyStreak } from "@/interfaces/Interfaces";
 
 interface TimerContextComponentProps {
   children: ReactNode;
-}
-
-// Storage interfaces
-export interface TimerSettings {
-  pomodoroDuration: number;
-  shortBreakDuration: number;
-  longBreakDuration: number;
-}
-
-export interface WeeklyStreak {
-  day: string;
-  focused: boolean;
-}
-
-export interface UserData {
-  pomodoroCount: number;
-  totalTime: number;
-  weeklyStreak: Array<WeeklyStreak>;
-  lastWeeklyReset: string;
 }
 
 // Default storage values
