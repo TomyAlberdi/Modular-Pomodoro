@@ -4,7 +4,12 @@ import {
   TimerContextType,
   TimerType,
 } from "@/context/TimerContext";
-import { Task, TimerSettings, UserData, WeeklyStreak } from "@/interfaces/Interfaces";
+import {
+  Task,
+  TimerSettings,
+  UserData,
+  WeeklyStreak,
+} from "@/interfaces/Interfaces";
 
 interface TimerContextComponentProps {
   children: ReactNode;
@@ -29,7 +34,7 @@ const DEFAULT_USER_DATA: UserData = {
     { day: "Sun", focused: false },
   ],
   lastWeeklyReset: "",
-  tasks: null,
+  tasks: [],
 };
 
 // Storage keys
@@ -102,11 +107,26 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
   const [weeklyStreak, setWeeklyStreak] = useState<Array<WeeklyStreak>>(
     storedUserData.weeklyStreak
   );
-  const [tasks, setTasks] = useState<Array<Task> | null>(
-    storedUserData.tasks
-  );
+  const [tasks, setTasks] = useState<Array<Task> | []>(storedUserData.tasks || []);
   const [totalTime, setTotalTime] = useState(storedUserData.totalTime);
   const [currentStreak, setCurrentStreak] = useState<number>(0);
+
+  const addTask = (task: Task) => {
+    // Search for existing task
+    const existingTask = tasks?.find((t) => t.text === task.text);
+    if (existingTask) {
+      return "Task already exists.";
+    }
+    if (tasks.length === 10) {
+      return "Maximum number of tasks reached.";
+    }
+    setTasks([...tasks, task]);
+    saveSettings(undefined, {
+      ...storedUserData,
+      tasks: [...tasks, task],
+    });
+    return true;
+  };
 
   useEffect(() => {
     const checkAndResetWeeklyStreak = () => {
@@ -351,6 +371,7 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
     totalTime,
     weeklyStreak,
     tasks,
+    addTask,
   };
 
   return (

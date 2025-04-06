@@ -14,7 +14,7 @@ export interface TimerContextType {
   pomodoroCount: number;
   totalTime: number;
   weeklyStreak: Array<WeeklyStreak>;
-  tasks: Array<Task> | null;
+  tasks: Array<Task> | [];
   // Util
   formatRemainingTime: (seconds: number) => string;
 
@@ -35,6 +35,7 @@ export interface TimerContextType {
   updateShortBreakDuration: (duration: number) => void;
   updateLongBreakDuration: (duration: number) => void;
   resetStats: () => void;
+  addTask: (task: Task) => boolean | string;
 }
 
 export const TimerContext = createContext<TimerContextType | null>(null);
