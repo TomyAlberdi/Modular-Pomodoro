@@ -143,6 +143,14 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
     setTasks(filteredTasks);
   };
 
+  const deleteAllTasks = () => {
+    setTasks([]);
+    saveSettings(undefined, {
+      ...storedUserData,
+      tasks: DEFAULT_USER_DATA.tasks,
+    });
+  };
+
   useEffect(() => {
     const checkAndResetWeeklyStreak = () => {
       const today = new Date();
@@ -389,6 +397,7 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
     addTask,
     toggleTask,
     deleteTask,
+    deleteAllTasks,
   };
 
   return (

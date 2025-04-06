@@ -38,6 +38,7 @@ export interface TimerContextType {
   addTask: (task: Task) => boolean | string;
   toggleTask: (task: Task) => void;
   deleteTask: (task: Task) => void;
+  deleteAllTasks: () => void;
 }
 
 export const TimerContext = createContext<TimerContextType | null>(null);
