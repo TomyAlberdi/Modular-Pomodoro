@@ -3,7 +3,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import Pauses from "@/modules/Pauses";
+import Tasks from "@/modules/Tasks";
 import Stats from "@/modules/Stats";
 import Streak from "@/modules/Streak";
 import Timer from "@/modules/Timer";
@@ -88,7 +88,7 @@ function App() {
       }
       autoSaveId={"horizontalPanelGroup"}
     >
-      <Pauses />
+      <Tasks />
       <ResizableHandle withHandle />
       <ResizablePanel
         defaultSize={middlePanelSize}

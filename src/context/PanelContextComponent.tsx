@@ -10,7 +10,7 @@ const PanelContextComponent: React.FC<PanelContextComponentProps> = ({
   children,
 }) => {
   // Horizontal panel size states
-  const [pausesPanelSize, setPausesPanelSize] = useState(33);
+  const [tasksPanelSize, setTasksPanelSize] = useState(33);
   const [middlePanelSize, setMiddlePanelSize] = useState(33);
   const [statsPanelSize, setStatsPanelSize] = useState(33);
   // Vertical panel size states
@@ -19,7 +19,7 @@ const PanelContextComponent: React.FC<PanelContextComponentProps> = ({
   const [streakPanelSize, setStreakPanelSize] = useState(33);
 
   // Panel refs
-  const pausesPanel = useRef<ImperativePanelHandle>(null);
+  const tasksPanel = useRef<ImperativePanelHandle>(null);
   const middlePanel = useRef<ImperativePanelHandle>(null);
   const statsPanel = useRef<ImperativePanelHandle>(null);
   const variablesPanel = useRef<ImperativePanelHandle>(null);
@@ -27,14 +27,14 @@ const PanelContextComponent: React.FC<PanelContextComponentProps> = ({
   const streakPanel = useRef<ImperativePanelHandle>(null);
 
   const resetPanelSizes = () => {
-    setPausesPanelSize(33);
+    setTasksPanelSize(33);
     setMiddlePanelSize(33);
     setStatsPanelSize(33);
     setVariablesPanelSize(33);
     setTimerPanelSize(33);
     setStreakPanelSize(33);
 
-    pausesPanel.current?.resize(33);
+    tasksPanel.current?.resize(33);
     middlePanel.current?.resize(33);
     statsPanel.current?.resize(33);
     variablesPanel.current?.resize(33);
@@ -43,13 +43,13 @@ const PanelContextComponent: React.FC<PanelContextComponentProps> = ({
   };
 
   const exportData: PanelContextType = {
-    pausesPanel,
+    tasksPanel,
     middlePanel,
     statsPanel,
     variablesPanel,
     timerPanel,
     streakPanel,
-    pausesPanelSize,
+    tasksPanelSize,
     middlePanelSize,
     statsPanelSize,
     variablesPanelSize,

@@ -1,17 +1,17 @@
 import { ResizablePanel } from "@/components/ui/resizable";
 import { usePanelContext } from "@/context/UsePanelContext";
 
-const Pauses = () => {
-  const { pausesPanelSize, pausesPanel } = usePanelContext();
+const Tasks = () => {
+  const { tasksPanelSize, tasksPanel } = usePanelContext();
 
   return (
     <ResizablePanel
-      ref={pausesPanel}
-      defaultSize={pausesPanelSize}
+      ref={tasksPanel}
+      defaultSize={tasksPanelSize}
       className="flex justify-center items-center"
     >
-      (WIP) Pauses
+      (WIP) Tasks
     </ResizablePanel>
   );
 };
-export default Pauses;
+export default Tasks;
