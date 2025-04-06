@@ -10,12 +10,14 @@ import {
 import { usePanelContext } from "@/context/UsePanelContext";
 import { useTimerContext } from "@/context/UseTimerContext";
 import {
+  Github,
   Grid2x2Check,
   ListRestart,
   PauseCircle,
   PlayCircle,
   RotateCcw,
   SkipForward,
+  Trash2,
 } from "lucide-react";
 import { useEffect } from "react";
 
@@ -48,6 +50,7 @@ const CommandMenu = ({ Open, setOpen }: CommandMenuProps) => {
     resetTimer,
     skipTimer,
     resetStats,
+    deleteAllTasks,
   } = useTimerContext();
 
   const handleStartCommand = () => {
@@ -62,6 +65,10 @@ const CommandMenu = ({ Open, setOpen }: CommandMenuProps) => {
   };
 
   const { resetPanelSizes } = usePanelContext();
+
+  const handleOpenCreatorWebsite = () => {
+    window.open("https://github.com/TomyAlberdi", "_blank");
+  };
 
   return (
     <CommandDialog open={Open} onOpenChange={setOpen}>
@@ -86,7 +93,7 @@ const CommandMenu = ({ Open, setOpen }: CommandMenuProps) => {
                 <span>Start Timer</span>
               </>
             )}
-            <CommandShortcut>Space</CommandShortcut>
+            <CommandShortcut>Ctrl + Space</CommandShortcut>
           </CommandItem>
           <CommandItem
             onSelect={() => {
@@ -120,6 +127,17 @@ const CommandMenu = ({ Open, setOpen }: CommandMenuProps) => {
             Reset Layout
           </CommandItem>
         </CommandGroup>
+        <CommandGroup heading="Tasks">
+          <CommandItem
+            onSelect={() => {
+              deleteAllTasks();
+              setOpen(false);
+            }}
+          >
+            <Trash2 />
+            Delete All Tasks
+          </CommandItem>
+        </CommandGroup>
         <CommandGroup heading="Data">
           <CommandItem
             onSelect={() => {
@@ -129,6 +147,12 @@ const CommandMenu = ({ Open, setOpen }: CommandMenuProps) => {
           >
             <ListRestart />
             Reset Stats
+          </CommandItem>
+        </CommandGroup>
+        <CommandGroup heading="Creator">
+          <CommandItem onSelect={handleOpenCreatorWebsite}>
+            <Github />
+            Made with 🍉 by <span className="italic">@TomyAlberdi</span>
           </CommandItem>
         </CommandGroup>
       </CommandList>

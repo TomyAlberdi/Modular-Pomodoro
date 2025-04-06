@@ -4,20 +4,15 @@ import {
   TimerContextType,
   TimerType,
 } from "@/context/TimerContext";
+import {
+  Task,
+  TimerSettings,
+  UserData,
+  WeeklyStreak,
+} from "@/interfaces/Interfaces";
 
 interface TimerContextComponentProps {
   children: ReactNode;
-}
-
-// Storage interfaces
-export interface TimerSettings {
-  pomodoroDuration: number;
-  shortBreakDuration: number;
-  longBreakDuration: number;
-}
-export interface UserData {
-  pomodoroCount: number;
-  totalTime: number;
 }
 
 // Default storage values
@@ -29,6 +24,17 @@ const DEFAULT_SETTINGS: TimerSettings = {
 const DEFAULT_USER_DATA: UserData = {
   pomodoroCount: 0,
   totalTime: 0,
+  weeklyStreak: [
+    { day: "Mon", focused: false },
+    { day: "Tue", focused: false },
+    { day: "Wed", focused: false },
+    { day: "Thu", focused: false },
+    { day: "Fri", focused: false },
+    { day: "Sat", focused: false },
+    { day: "Sun", focused: false },
+  ],
+  lastWeeklyReset: "",
+  tasks: [],
 };
 
 // Storage keys
@@ -98,17 +104,84 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
   const [pomodoroCount, setPomodoroCount] = useState(
     storedUserData.pomodoroCount
   );
+  const [weeklyStreak, setWeeklyStreak] = useState<Array<WeeklyStreak>>(
+    storedUserData.weeklyStreak
+  );
+  const [tasks, setTasks] = useState<Array<Task> | []>(
+    storedUserData.tasks || []
+  );
   const [totalTime, setTotalTime] = useState(storedUserData.totalTime);
   const [currentStreak, setCurrentStreak] = useState<number>(0);
 
-  const resetStats = () => {
-    setPomodoroCount(0);
-    setCurrentStreak(0);
-    setTotalTime(0);
+  const addTask = (task: Task) => {
+    // Search for existing task
+    const existingTask = tasks?.find((t) => t.text === task.text);
+    if (existingTask) {
+      return "Task already exists.";
+    }
+    if (tasks.length === 10) {
+      return "Maximum number of tasks reached.";
+    }
+    setTasks([...tasks, task]);
     saveSettings(undefined, {
       ...storedUserData,
-      pomodoroCount: 0,
-      totalTime: 0,
+      tasks: [...tasks, task],
+    });
+    return true;
+  };
+
+  const toggleTask = (task: Task) => {
+    const toggledTask = tasks.find((t) => t.text === task.text);
+    if (toggledTask) {
+      toggledTask.completed = !toggledTask.completed;
+      setTasks([...tasks]);
+    }
+  };
+
+  const deleteTask = (task: Task) => {
+    const filteredTasks = tasks.filter((t) => t.text !== task.text);
+    setTasks(filteredTasks);
+  };
+
+  const deleteAllTasks = () => {
+    setTasks([]);
+    saveSettings(undefined, {
+      ...storedUserData,
+      tasks: DEFAULT_USER_DATA.tasks,
+    });
+  };
+
+  useEffect(() => {
+    const checkAndResetWeeklyStreak = () => {
+      const today = new Date();
+      const dayOfWeek = today.getDay();
+      if (dayOfWeek === 1) {
+        const lastResetDate = localStorage.getItem("lastWeeklyReset");
+        const currentDate = today.toISOString().split("T")[0];
+        if (lastResetDate !== currentDate) {
+          setWeeklyStreak(DEFAULT_USER_DATA.weeklyStreak);
+          saveSettings(undefined, {
+            ...storedUserData,
+            lastWeeklyReset: currentDate,
+            weeklyStreak: DEFAULT_USER_DATA.weeklyStreak,
+          });
+        }
+      }
+    };
+    checkAndResetWeeklyStreak();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const resetStats = () => {
+    setPomodoroCount(DEFAULT_USER_DATA.pomodoroCount);
+    setTotalTime(DEFAULT_USER_DATA.totalTime);
+    setWeeklyStreak(DEFAULT_USER_DATA.weeklyStreak);
+    saveSettings(undefined, {
+      ...storedUserData,
+      pomodoroCount: DEFAULT_USER_DATA.pomodoroCount,
+      totalTime: DEFAULT_USER_DATA.totalTime,
+      weeklyStreak: DEFAULT_USER_DATA.weeklyStreak,
+      tasks: DEFAULT_USER_DATA.tasks,
     });
   };
 
@@ -163,10 +236,15 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
 
     let nextType: TimerType;
     if (currentType === "pomodoro") {
+      const weekday = (new Date().getDay() + 6) % 7;
+      const newWeeklyStreak = [...weeklyStreak];
+      newWeeklyStreak[weekday] = { ...newWeeklyStreak[weekday], focused: true };
+      setWeeklyStreak(newWeeklyStreak);
       saveSettings(undefined, {
         ...storedUserData,
         pomodoroCount: pomodoroCount + 1,
         totalTime: totalTime + pomodoroDuration,
+        weeklyStreak: newWeeklyStreak,
       });
       setPomodoroCount((prev) => prev + 1);
       setCurrentStreak((prev) => prev + 1);
@@ -198,6 +276,7 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
     sendNotification,
     storedUserData,
     totalTime,
+    weeklyStreak,
   ]);
 
   // Starts the timer
@@ -313,6 +392,12 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
     formatRemainingTime,
     resetStats,
     totalTime,
+    weeklyStreak,
+    tasks,
+    addTask,
+    toggleTask,
+    deleteTask,
+    deleteAllTasks,
   };
 
   return (

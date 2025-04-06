@@ -6,7 +6,6 @@ import { Flame, Frown } from "lucide-react";
 const Streak = () => {
   const { currentStreak } = useTimerContext();
   const { streakPanelSize, streakPanel } = usePanelContext();
-  //TODO: Design & implement streak panel
   return (
     <ResizablePanel
       ref={streakPanel}

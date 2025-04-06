@@ -3,7 +3,7 @@ import type { ImperativePanelHandle } from "react-resizable-panels";
 
 export interface PanelContextType {
   // Panel refs
-  pausesPanel: React.RefObject<ImperativePanelHandle | null>;
+  tasksPanel: React.RefObject<ImperativePanelHandle | null>;
   middlePanel: React.RefObject<ImperativePanelHandle | null>;
   statsPanel: React.RefObject<ImperativePanelHandle | null>;
   variablesPanel: React.RefObject<ImperativePanelHandle | null>;
@@ -11,7 +11,7 @@ export interface PanelContextType {
   streakPanel: React.RefObject<ImperativePanelHandle | null>;
 
   // Panel sizes
-  pausesPanelSize: number;
+  tasksPanelSize: number;
   middlePanelSize: number;
   statsPanelSize: number;
   variablesPanelSize: number;
