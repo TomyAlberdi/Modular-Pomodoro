@@ -10,7 +10,6 @@ export interface WeeklyStreak {
 }
 
 export interface Task {
-  id: number;
   text: string;
   completed: boolean;
 }
@@ -20,6 +19,6 @@ export interface UserData {
   totalTime: number;
   weeklyStreak: Array<WeeklyStreak>;
   lastWeeklyReset: string;
-  tasks: Array<Task> | null;
+  tasks: Array<Task> | [];
 }
 
