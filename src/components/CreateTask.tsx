@@ -35,7 +35,7 @@ const CreateTask = () => {
   return (
     <Dialog open={Open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="ml-3 cursor-pointer">
+        <Button className="cursor-pointer">
           <Plus />
         </Button>
       </DialogTrigger>
