@@ -4,7 +4,7 @@ import {
   TimerContextType,
   TimerType,
 } from "@/context/TimerContext";
-import { TimerSettings, UserData, WeeklyStreak } from "@/interfaces/Interfaces";
+import { Task, TimerSettings, UserData, WeeklyStreak } from "@/interfaces/Interfaces";
 
 interface TimerContextComponentProps {
   children: ReactNode;
@@ -29,6 +29,7 @@ const DEFAULT_USER_DATA: UserData = {
     { day: "Sun", focused: false },
   ],
   lastWeeklyReset: "",
+  tasks: null,
 };
 
 // Storage keys
@@ -101,6 +102,9 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
   const [weeklyStreak, setWeeklyStreak] = useState<Array<WeeklyStreak>>(
     storedUserData.weeklyStreak
   );
+  const [tasks, setTasks] = useState<Array<Task> | null>(
+    storedUserData.tasks
+  );
   const [totalTime, setTotalTime] = useState(storedUserData.totalTime);
   const [currentStreak, setCurrentStreak] = useState<number>(0);
 
@@ -134,6 +138,7 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
       pomodoroCount: DEFAULT_USER_DATA.pomodoroCount,
       totalTime: DEFAULT_USER_DATA.totalTime,
       weeklyStreak: DEFAULT_USER_DATA.weeklyStreak,
+      tasks: DEFAULT_USER_DATA.tasks,
     });
   };
 
@@ -345,6 +350,7 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
     resetStats,
     totalTime,
     weeklyStreak,
+    tasks,
   };
 
   return (

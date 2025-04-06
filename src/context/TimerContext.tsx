@@ -1,4 +1,4 @@
-import { WeeklyStreak } from "@/interfaces/Interfaces";
+import { Task, WeeklyStreak } from "@/interfaces/Interfaces";
 import { createContext } from "react";
 
 export type TimerType = "pomodoro" | "shortBreak" | "longBreak";
@@ -14,6 +14,7 @@ export interface TimerContextType {
   pomodoroCount: number;
   totalTime: number;
   weeklyStreak: Array<WeeklyStreak>;
+  tasks: Array<Task> | null;
   // Util
   formatRemainingTime: (seconds: number) => string;
 
