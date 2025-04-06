@@ -107,7 +107,9 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
   const [weeklyStreak, setWeeklyStreak] = useState<Array<WeeklyStreak>>(
     storedUserData.weeklyStreak
   );
-  const [tasks, setTasks] = useState<Array<Task> | []>(storedUserData.tasks || []);
+  const [tasks, setTasks] = useState<Array<Task> | []>(
+    storedUserData.tasks || []
+  );
   const [totalTime, setTotalTime] = useState(storedUserData.totalTime);
   const [currentStreak, setCurrentStreak] = useState<number>(0);
 
@@ -126,6 +128,19 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
       tasks: [...tasks, task],
     });
     return true;
+  };
+
+  const toggleTask = (task: Task) => {
+    const toggledTask = tasks.find((t) => t.text === task.text);
+    if (toggledTask) {
+      toggledTask.completed = !toggledTask.completed;
+      setTasks([...tasks]);
+    }
+  };
+
+  const deleteTask = (task: Task) => {
+    const filteredTasks = tasks.filter((t) => t.text !== task.text);
+    setTasks(filteredTasks);
   };
 
   useEffect(() => {
@@ -372,6 +387,8 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
     weeklyStreak,
     tasks,
     addTask,
+    toggleTask,
+    deleteTask,
   };
 
   return (

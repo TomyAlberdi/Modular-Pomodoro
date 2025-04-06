@@ -36,6 +36,8 @@ export interface TimerContextType {
   updateLongBreakDuration: (duration: number) => void;
   resetStats: () => void;
   addTask: (task: Task) => boolean | string;
+  toggleTask: (task: Task) => void;
+  deleteTask: (task: Task) => void;
 }
 
 export const TimerContext = createContext<TimerContextType | null>(null);
