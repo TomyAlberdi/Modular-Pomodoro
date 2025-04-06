@@ -28,7 +28,7 @@ function App() {
 
   useEffect(() => {
     const pause = (e: KeyboardEvent) => {
-      if (e.key === " " || e.key === "Spacebar") {
+      if ((e.key === " " || e.key === "Spacebar") && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
         if (!isStarted) {
           startTimer();

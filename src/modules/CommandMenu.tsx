@@ -86,7 +86,7 @@ const CommandMenu = ({ Open, setOpen }: CommandMenuProps) => {
                 <span>Start Timer</span>
               </>
             )}
-            <CommandShortcut>Space</CommandShortcut>
+            <CommandShortcut>Ctrl + Space</CommandShortcut>
           </CommandItem>
           <CommandItem
             onSelect={() => {
