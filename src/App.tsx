@@ -13,6 +13,7 @@ import FloatingAdvice from "@/components/FloatingAdvice";
 import { useTimerContext } from "@/context/UseTimerContext";
 import { useEffect, useState } from "react";
 import { usePanelContext } from "@/context/UsePanelContext";
+import { TabletSmartphone } from "lucide-react";
 
 function App() {
   const {
@@ -74,45 +75,56 @@ function App() {
   const { middlePanelSize, middlePanel } = usePanelContext();
 
   return (
-    <ResizablePanelGroup
-      direction="horizontal"
-      className={
-        "App min-h-screen min-w-screen flex justify-center items-center overflow-hidden transition-colors duration-500 ease-linear " +
-        (!isRunning
-          ? "bg-timer-idle"
-          : currentType === "pomodoro"
-          ? "bg-timer-pomodoro"
-          : currentType === "shortBreak"
-          ? "bg-timer-short-break"
-          : "bg-timer-long-break")
-      }
-      autoSaveId={"horizontalPanelGroup"}
-    >
-      <Tasks />
-      <ResizableHandle withHandle />
-      <ResizablePanel
-        defaultSize={middlePanelSize}
-        minSize={25}
-        ref={middlePanel}
-        className="border-x flex justify-center items-center"
+    <>
+      <ResizablePanelGroup
+        direction="horizontal"
+        className={
+          "App min-h-screen min-w-screen justify-center items-center overflow-hidden transition-colors duration-500 ease-linear " +
+          (!isRunning
+            ? "bg-timer-idle"
+            : currentType === "pomodoro"
+            ? "bg-timer-pomodoro"
+            : currentType === "shortBreak"
+            ? "bg-timer-short-break"
+            : "bg-timer-long-break")
+        }
+        autoSaveId={"horizontalPanelGroup"}
       >
-        <ResizablePanelGroup
-          direction="vertical"
-          className="min-h-screen"
-          autoSaveId={"verticalPanelGroup"}
+        <Tasks />
+        <ResizableHandle withHandle />
+        <ResizablePanel
+          defaultSize={middlePanelSize}
+          minSize={25}
+          ref={middlePanel}
+          className="border-x flex justify-center items-center"
         >
-          <Variables />
-          <ResizableHandle withHandle />
-          <Timer />
-          <ResizableHandle withHandle />
-          <Streak />
-        </ResizablePanelGroup>
-      </ResizablePanel>
-      <ResizableHandle withHandle />
-      <Stats />
-      <CommandMenu Open={CommandMenuOpen} setOpen={setCommandMenuOpen} />
-      <FloatingAdvice Open={CommandMenuOpen} setOpen={setCommandMenuOpen} />
-    </ResizablePanelGroup>
+          <ResizablePanelGroup
+            direction="vertical"
+            className="min-h-screen"
+            autoSaveId={"verticalPanelGroup"}
+          >
+            <Variables />
+            <ResizableHandle withHandle />
+            <Timer />
+            <ResizableHandle withHandle />
+            <Streak />
+          </ResizablePanelGroup>
+        </ResizablePanel>
+        <ResizableHandle withHandle />
+        <Stats />
+        <CommandMenu Open={CommandMenuOpen} setOpen={setCommandMenuOpen} />
+        <FloatingAdvice Open={CommandMenuOpen} setOpen={setCommandMenuOpen} />
+      </ResizablePanelGroup>
+      <div className="min-h-screen min-w-screen flex justify-center items-center bg-timer-idle gap-4 md:hidden">
+        <div className="bg-white p-4 rounded-lg">
+          <TabletSmartphone size={48} color="black" />
+        </div>
+        <div className="flex flex-col gap-2 text-left">
+          <h1>Mobile Modular Pomodoro</h1>
+          <span>In Development</span>
+        </div>
+      </div>
+    </>
   );
 }
 
