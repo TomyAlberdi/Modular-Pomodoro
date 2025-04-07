@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 
 const CreateTask = () => {
   const { addTask } = useTimerContext();
-
+  //TODO: Implement Enter key to create task faster
   const [Open, setOpen] = useState(false);
   const [Task, setTask] = useState<TaskType>({ text: "", completed: false });
 

@@ -15,7 +15,7 @@ import { ChevronDown, CircleCheck, CircleX, Trash2 } from "lucide-react";
 const Tasks = () => {
   const { tasksPanelSize, tasksPanel } = usePanelContext();
   const { tasks, toggleTask, deleteTask } = useTimerContext();
-
+  //TODO: Implement change order of tasks (probably with drag and drop)
   return (
     <ResizablePanel
       ref={tasksPanel}
