@@ -135,12 +135,20 @@ const TimerContextComponent: React.FC<TimerContextComponentProps> = ({
     if (toggledTask) {
       toggledTask.completed = !toggledTask.completed;
       setTasks([...tasks]);
+      saveSettings(undefined, {
+        ...storedUserData,
+        tasks: [...tasks],
+      });
     }
   };
 
   const deleteTask = (task: Task) => {
     const filteredTasks = tasks.filter((t) => t.text !== task.text);
     setTasks(filteredTasks);
+    saveSettings(undefined, {
+      ...storedUserData,
+      tasks: filteredTasks,
+    });
   };
 
   const deleteAllTasks = () => {
