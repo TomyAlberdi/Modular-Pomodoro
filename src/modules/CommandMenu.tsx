@@ -67,7 +67,7 @@ const CommandMenu = ({ Open, setOpen }: CommandMenuProps) => {
   const { resetPanelSizes } = usePanelContext();
 
   const handleOpenCreatorWebsite = () => {
-    window.open("https://github.com/TomyAlberdi", "_blank");
+    window.open("https://www.tomas-alberdi.work/", "_blank");
   };
 
   return (
